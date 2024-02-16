@@ -3,7 +3,7 @@ import erc20Abi from '@/lib/abis/erc20'
 import networkConfig from '@/lib/network.config'
 import type { Address } from 'viem'
 import { toast } from '@/components/ui/use-toast'
-import ExplorerLink from '@/components/ExplorerLink'
+import ExplorerLink from '@/components/explorer-link'
 
 const contractConfig = {
   abi: erc20Abi,
@@ -23,16 +23,10 @@ export function useGetCEurBalance({
   })
 }
 
-export function useApprove({
-  address,
-  amount,
-}: {
-  address: Address
-  amount: bigint
-}) {
+export function useApprove() {
   const mutation = useWriteContract()
 
-  function approve() {
+  function approve({ address, amount }: { address: Address; amount: bigint }) {
     mutation.writeContract(
       {
         ...contractConfig,
