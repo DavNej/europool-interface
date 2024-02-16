@@ -6,6 +6,7 @@ interface NetworkConfig {
   chainId: number
   euroPoolAddress: Address
   cEuroAddress: Address
+  explorerUrl?: string
 }
 
 const LOCALHOST_EUROPOOL_ADDRESS = '0x5FbDB2315678afecb367f032d93F642f64180aa3'
@@ -25,6 +26,7 @@ export const celoAlfajoresNetworkConfig: NetworkConfig = {
   chainId: celoAlfajores.id,
   euroPoolAddress: ALFAJORES_EUROPOOL_ADDRESS,
   cEuroAddress: ALFAJORES_C_EURO_ADDRESS,
+  explorerUrl: 'https://alfajores.celoscan.io/',
 }
 
 const config =
