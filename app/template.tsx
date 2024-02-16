@@ -6,13 +6,21 @@ import { Button } from '@/components/ui/button'
 import { useAccount, useDisconnect } from 'wagmi'
 import { useToast } from '@/components/ui/use-toast'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import networkConfig from '@/lib/network.config'
 
 export default function HomeTemplate({ children }: React.PropsWithChildren) {
   const { connectors, connect } = useConnect()
-  const { isConnected } = useAccount()
+  const { isConnected, chainId } = useAccount()
   const { disconnect } = useDisconnect()
   const { toast } = useToast()
+
   const injected = connectors.find(connector => connector.id === 'injected')
+
+  React.useEffect(() => {
+    if (isConnected && chainId !== networkConfig.chainId) {
+      alert(`Please switch to ${networkConfig.chain.name} network`)
+    }
+  }, [chainId, isConnected])
 
   return (
     <main className='flex flex-col min-h-screen bg-slate-100'>

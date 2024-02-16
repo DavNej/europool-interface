@@ -11,11 +11,15 @@ const contractConfig = {
   address: networkConfig.euroPoolAddress,
 }
 
-export function useGetDepositedBalance({ address }: { address: Address }) {
+export function useGetDepositedBalance({
+  address,
+}: {
+  address: Address | undefined
+}) {
   return useReadContract({
     ...contractConfig,
     functionName: 'getStaked',
-    args: [address],
+    args: [address || '0x'],
   })
 }
 
