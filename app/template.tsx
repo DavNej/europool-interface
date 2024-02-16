@@ -5,6 +5,7 @@ import { useConnect } from 'wagmi'
 import { Button } from '@/components/ui/button'
 import { useAccount, useDisconnect } from 'wagmi'
 import { useToast } from '@/components/ui/use-toast'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 
 export default function HomeTemplate({ children }: React.PropsWithChildren) {
   const { connectors, connect } = useConnect()
@@ -16,12 +17,19 @@ export default function HomeTemplate({ children }: React.PropsWithChildren) {
   return (
     <main className='flex flex-col min-h-screen bg-slate-100'>
       <nav className='flex p-4 gap-4 items-center justify-between bg-white'>
-        <p className='flex flex-col'>
-          <span className='text-lg font-bold'>EuroPool</span>
-          <span className='text-xs font-extralight'>
-            a simple staking service
-          </span>
-        </p>
+        <div className='flex gap-2'>
+          <Avatar className='mt-1'>
+            <AvatarImage src='/logo.png' />
+            <AvatarFallback>EP</AvatarFallback>
+          </Avatar>
+
+          <div className='flex flex-col'>
+            <span className='text-lg font-bold'>EuroPool</span>
+            <span className='text-xs font-extralight'>
+              a simple staking service
+            </span>
+          </div>
+        </div>
 
         <Button
           onClick={() => {
@@ -29,8 +37,10 @@ export default function HomeTemplate({ children }: React.PropsWithChildren) {
               disconnect()
               return
             }
+
             if (injected) {
               connect({ connector: injected })
+              return
             }
 
             toast({
