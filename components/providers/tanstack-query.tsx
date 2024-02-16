@@ -18,30 +18,34 @@ export default function TanstackQueryProvider({
 
   function onError(err: unknown) {
     const isTypeError = err instanceof Error && err.message
+    console.error('💥', err)
     toast({
-      title: 'Oops!',
+      title: 'Fetching error 💥',
       description: isTypeError ? err.message : 'Something went wrong',
       variant: 'destructive',
     })
   }
 
-  const _queryClient = new QueryClient({
-    queryCache: new QueryCache({ onError }),
-    defaultOptions: {
-      queries: {
-        retry: false,
-        refetchOnWindowFocus: false,
-      },
-      mutations: { onError },
-    },
-  })
-
-  const [queryClient] = React.useState(_queryClient)
+  const [queryClient] = React.useState(
+    () =>
+      new QueryClient({
+        queryCache: new QueryCache({ onError }),
+        defaultOptions: {
+          queries: {
+            retry: false,
+            refetchOnWindowFocus: false,
+            staleTime: 6 * 1000,
+            refetchInterval: 6 * 1000,
+          },
+          mutations: { onError },
+        },
+      })
+  )
 
   return (
     <QueryClientProvider client={queryClient}>
       {children}
-      <ReactQueryDevtools initialIsOpen={false} />
+      <ReactQueryDevtools />
     </QueryClientProvider>
   )
 }
