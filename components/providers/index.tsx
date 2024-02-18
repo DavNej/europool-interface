@@ -1,13 +1,12 @@
 'use client'
 
-import { WagmiProvider } from 'wagmi'
-import { config } from '@/lib/wagmi.config'
 import TanstackQueryProvider from './tanstack-query'
+import RainbowProvider from './rainbow-kit'
 
 export default function Providers({ children }: React.PropsWithChildren) {
   return (
-    <WagmiProvider config={config}>
-      <TanstackQueryProvider>{children}</TanstackQueryProvider>
-    </WagmiProvider>
+    <TanstackQueryProvider>
+      <RainbowProvider>{children}</RainbowProvider>
+    </TanstackQueryProvider>
   )
 }
