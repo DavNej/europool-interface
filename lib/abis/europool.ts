@@ -34,7 +34,7 @@ const abi = [
   },
   {
     type: 'function',
-    name: 'getContractTokenBalance',
+    name: 'getRewardPoolBalance',
     inputs: [],
     outputs: [{ name: '', type: 'uint256', internalType: 'uint256' }],
     stateMutability: 'view',
@@ -48,7 +48,14 @@ const abi = [
   },
   {
     type: 'function',
-    name: 'getStaked',
+    name: 'getRewardsOf',
+    inputs: [{ name: 'account', type: 'address', internalType: 'address' }],
+    outputs: [{ name: '', type: 'uint256', internalType: 'uint256' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    name: 'getStakedBalanceOf',
     inputs: [{ name: 'account', type: 'address', internalType: 'address' }],
     outputs: [{ name: '', type: 'uint256', internalType: 'uint256' }],
     stateMutability: 'view',
@@ -199,6 +206,7 @@ const abi = [
     anonymous: false,
   },
   { type: 'error', name: 'EuroPool__NeedsMoreThanZero', inputs: [] },
+  { type: 'error', name: 'EuroPool__NoRewardsToClaim', inputs: [] },
   { type: 'error', name: 'EuroPool__TransferFailed', inputs: [] },
   {
     type: 'error',

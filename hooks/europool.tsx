@@ -11,49 +11,60 @@ const contractConfig = {
   address: networkConfig.euroPoolAddress,
 }
 
-export function useGetDepositedBalance({
+export function useGetStakedBalanceOf({
   address,
 }: {
   address: Address | undefined
 }) {
   return useReadContract({
     ...contractConfig,
-    functionName: 'getStaked',
+    functionName: 'getStakedBalanceOf',
     args: [address || '0x'],
+    query: { enabled: !!address },
+  })
+}
+
+export function useGetRewardsOf({ address }: { address: Address | undefined }) {
+  return useReadContract({
+    ...contractConfig,
+    functionName: 'getRewardsOf',
+    args: [address || '0x'],
+    query: { enabled: !!address },
   })
 }
 
 export function useStake() {
-  const { approve } = useApprove()
-
   const mutation = useWriteContract()
+  const { approve } = useApprove({
+    onSuccess: amount => {
+      mutation.writeContract(
+        {
+          ...contractConfig,
+          functionName: 'stake',
+          args: [amount],
+        },
+        {
+          onSuccess: txHash => {
+            toast({
+              title: 'Deposit Successful',
+              description: (
+                <>
+                  <p>You have successfully deposited your funds</p>
+                  <ExplorerLink txHash={txHash} />
+                </>
+              ),
+            })
+          },
+        }
+      )
+    },
+  })
 
   function stake({ amount }: { amount: bigint }) {
     approve({
       address: networkConfig.euroPoolAddress,
       amount,
     })
-
-    mutation.writeContract(
-      {
-        ...contractConfig,
-        functionName: 'stake',
-        args: [amount],
-      },
-      {
-        onSuccess: txHash => {
-          toast({
-            title: 'Deposit Successful',
-            description: (
-              <>
-                <p>You have successfully deposited your funds</p>
-                <ExplorerLink txHash={txHash} />
-              </>
-            ),
-          })
-        },
-      }
-    )
   }
 
   return { ...mutation, stake }
@@ -86,4 +97,32 @@ export function useWithdraw() {
   }
 
   return { ...mutation, withdraw }
+}
+
+export function useClaimReward() {
+  const mutation = useWriteContract()
+
+  function claimReward() {
+    mutation.writeContract(
+      {
+        ...contractConfig,
+        functionName: 'claimReward',
+      },
+      {
+        onSuccess: txHash => {
+          toast({
+            title: 'Rewards Successfully Claimed',
+            description: (
+              <>
+                <p>You have successfully claimed your rewards</p>
+                <ExplorerLink txHash={txHash} />
+              </>
+            ),
+          })
+        },
+      }
+    )
+  }
+
+  return { ...mutation, claimReward }
 }

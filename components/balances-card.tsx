@@ -4,7 +4,7 @@ import * as React from 'react'
 import { useAccount } from 'wagmi'
 import { formatBigint } from '@/lib/utils'
 import { useGetCEurBalance } from '@/hooks/c-eur'
-import { useGetDepositedBalance } from '@/hooks/europool'
+import { useGetStakedBalanceOf } from '@/hooks/europool'
 import {
   Card,
   CardContent,
@@ -16,7 +16,7 @@ import {
 export default function BalancesCard() {
   const { address } = useAccount()
   const { data: cEurBalance } = useGetCEurBalance({ address })
-  const { data: stakedBalance } = useGetDepositedBalance({ address })
+  const { data: stakedBalance } = useGetStakedBalanceOf({ address })
 
   return (
     <Card>

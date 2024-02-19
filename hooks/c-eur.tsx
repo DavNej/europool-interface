@@ -23,10 +23,20 @@ export function useGetCEurBalance({
   })
 }
 
-export function useApprove() {
+export function useApprove({
+  onSuccess,
+}: {
+  onSuccess: (amount: bigint) => void
+}) {
   const mutation = useWriteContract()
 
-  function approve({ address, amount }: { address: Address; amount: bigint }) {
+  async function approve({
+    address,
+    amount,
+  }: {
+    address: Address
+    amount: bigint
+  }) {
     mutation.writeContract(
       {
         ...contractConfig,
@@ -39,6 +49,7 @@ export function useApprove() {
             title: 'Approval Successful',
             description: <ExplorerLink txHash={txHash} />,
           })
+          onSuccess(amount)
         },
       }
     )
