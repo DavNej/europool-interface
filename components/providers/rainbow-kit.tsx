@@ -10,6 +10,9 @@ if (!projectId) {
   throw new Error('Missing NEXT_PUBLIC_PROJECT_ID')
 }
 
+// @ts-ignore
+localhost.id = 31_337
+
 const config = getDefaultConfig({
   appName: 'EuroPool',
   projectId,
@@ -20,7 +23,9 @@ const config = getDefaultConfig({
 export default function RainbowProvider({ children }: React.PropsWithChildren) {
   return (
     <WagmiProvider config={config}>
-      <RainbowKitProvider>{children}</RainbowKitProvider>
+      <RainbowKitProvider modalSize='compact' initialChain={celoAlfajores}>
+        {children}
+      </RainbowKitProvider>
     </WagmiProvider>
   )
 }
