@@ -1,6 +1,6 @@
 import { getDefaultConfig, RainbowKitProvider } from '@rainbow-me/rainbowkit'
 import { WagmiProvider } from 'wagmi'
-import { localhost, celoAlfajores } from 'wagmi/chains'
+import networkConfig from '@/lib/network.config'
 
 import '@rainbow-me/rainbowkit/styles.css'
 
@@ -10,20 +10,19 @@ if (!projectId) {
   throw new Error('Missing NEXT_PUBLIC_PROJECT_ID')
 }
 
-// @ts-ignore
-localhost.id = 31_337
-
 const config = getDefaultConfig({
   appName: 'EuroPool',
   projectId,
-  chains: [localhost, celoAlfajores],
+  chains: networkConfig.chains,
   ssr: true,
 })
 
 export default function RainbowProvider({ children }: React.PropsWithChildren) {
   return (
     <WagmiProvider config={config}>
-      <RainbowKitProvider modalSize='compact' initialChain={celoAlfajores}>
+      <RainbowKitProvider
+        modalSize='compact'
+        initialChain={networkConfig.chains[0]}>
         {children}
       </RainbowKitProvider>
     </WagmiProvider>

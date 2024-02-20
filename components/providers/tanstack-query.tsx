@@ -35,7 +35,7 @@ export default function TanstackQueryProvider({
             retry: false,
             refetchOnWindowFocus: false,
             staleTime: 6 * 1000,
-            refetchInterval: 6 * 1000,
+            // refetchInterval: 6 * 1000,
           },
           mutations: { onError },
         },
