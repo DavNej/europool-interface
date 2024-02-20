@@ -10,6 +10,9 @@ const contractConfig = {
   address: networkConfig.cEuroAddress,
 }
 
+/**
+ * cEur reads
+ */
 export function useGetCEurBalance({
   address,
 }: {
@@ -19,10 +22,14 @@ export function useGetCEurBalance({
     ...contractConfig,
     functionName: 'balanceOf',
     args: [address || '0x'],
-    query: { enabled: !!address },
+    query: { enabled: !!address, initialData: BigInt(0) },
   })
 }
 
+
+/**
+ * cEur writes
+ */
 export function useApprove({
   onSuccess,
 }: {

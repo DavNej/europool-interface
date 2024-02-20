@@ -6,6 +6,9 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
-export function formatBigint(data: bigint, decimals = 2) {
+export function formatBigint(data: bigint | undefined, decimals = 2) {
+  if(!data)
+    return (0).toFixed(decimals)
+
   return parseFloat(formatEther(data)).toFixed(decimals)
 }

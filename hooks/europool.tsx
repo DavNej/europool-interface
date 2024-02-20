@@ -11,6 +11,9 @@ const contractConfig = {
   address: networkConfig.euroPoolAddress,
 }
 
+/**
+ * EuroPool reads
+ */
 export function useGetStakedBalanceOf({
   address,
 }: {
@@ -20,7 +23,7 @@ export function useGetStakedBalanceOf({
     ...contractConfig,
     functionName: 'getStakedBalanceOf',
     args: [address || '0x'],
-    query: { enabled: !!address },
+    query: { enabled: !!address, initialData: BigInt(0) },
   })
 }
 
@@ -29,10 +32,13 @@ export function useGetRewardsOf({ address }: { address: Address | undefined }) {
     ...contractConfig,
     functionName: 'getRewardsOf',
     args: [address || '0x'],
-    query: { enabled: !!address },
+    query: { enabled: !!address, initialData: BigInt(0) },
   })
 }
 
+/**
+ * EuroPool writes
+ */
 export function useStake() {
   const mutation = useWriteContract()
   const { approve } = useApprove({

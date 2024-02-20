@@ -29,17 +29,17 @@ export default function BalancesCard() {
       <CardContent>
         <div className='flex items-center justify-between'>
           <p className='font-medium'>Available</p>
-          <p>{!!cEurBalance ? formatBigint(cEurBalance) : '0.00'} cEUR</p>
+          <p>{formatBigint(cEurBalance)} cEUR</p>
         </div>
 
         <div className='flex items-center justify-between'>
           <p className='font-medium'>Staked in EuroPool</p>
-          <p>{!!stakedBalance ? formatBigint(stakedBalance) : '0.00'} cEUR</p>
+          <p>{formatBigint(stakedBalance)} cEUR</p>
         </div>
 
         <div className='flex items-center justify-between'>
           <p className='font-medium'>Last updated rewards</p>
-          <p>{!!rewards ? formatBigint(rewards, 18) : '0.00'} cEUR</p>
+          <p>{formatBigint(rewards, 18)} cEUR</p>
         </div>
       </CardContent>
     </Card>
