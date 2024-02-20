@@ -23,7 +23,7 @@ export default function HomeTemplate({ children }: React.PropsWithChildren) {
         </div>
         <ConnectButton />
       </nav>
-      <div className='flex-1 flex flex-col p-24 place-items-center gap-8'>
+      <div className='flex-1 flex flex-col place-items-center gap-8 py-24 px-12'>
         {children}
       </div>
       <footer className='p-4 text-sm text-center font-light'>

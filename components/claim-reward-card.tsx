@@ -1,7 +1,6 @@
 'use client'
 
 import * as React from 'react'
-import { useAccount } from 'wagmi'
 import { Button } from '@/components/ui/button'
 import {
   Card,
@@ -10,11 +9,9 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
-import { useGetStakedBalanceOf, useClaimReward } from '@/hooks/europool'
+import { useClaimReward } from '@/hooks/europool'
 
 export default function ClaimRewardCard() {
-  const { address } = useAccount()
-  const { data: stakedBalance } = useGetStakedBalanceOf({ address })
   const { claimReward } = useClaimReward()
 
   return (
@@ -29,7 +26,7 @@ export default function ClaimRewardCard() {
 
       <CardContent className='flex justify-center'>
         <Button
-          className='m-auto'
+          className='w-full'
           onClick={() => {
             claimReward()
           }}>

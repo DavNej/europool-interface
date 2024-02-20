@@ -20,7 +20,7 @@ export default function HomePage() {
   }
 
   return (
-    <Tabs defaultValue='balances' className='w-full md:w-1/2'>
+    <Tabs defaultValue='balances' className='w-full md:w-2/3 lg:w-1/2 xl:w-1/3'>
       <TabsList>
         <TabsTrigger value='balances'>Balances</TabsTrigger>
         <TabsTrigger value='deposit'>Deposit</TabsTrigger>
