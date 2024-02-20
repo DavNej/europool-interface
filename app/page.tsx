@@ -5,6 +5,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import BalancesCard from '@/components/balances-card'
 import DepositCard from '@/components/deposit-card'
 import WithdrawCard from '@/components/withdraw-card'
+import ClaimRewardsCard from '@/components/claim-reward-card'
 import { useAccount } from 'wagmi'
 
 export default function HomePage() {
@@ -23,6 +24,7 @@ export default function HomePage() {
       <TabsList>
         <TabsTrigger value='balances'>Balances</TabsTrigger>
         <TabsTrigger value='deposit'>Deposit</TabsTrigger>
+        <TabsTrigger value='claim'>Claim rewards</TabsTrigger>
         <TabsTrigger value='withdraw'>Withdraw</TabsTrigger>
       </TabsList>
 
@@ -32,6 +34,10 @@ export default function HomePage() {
 
       <TabsContent value='deposit'>
         <DepositCard />
+      </TabsContent>
+
+      <TabsContent value='claim'>
+        <ClaimRewardsCard />
       </TabsContent>
 
       <TabsContent value='withdraw'>
