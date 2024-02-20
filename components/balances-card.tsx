@@ -21,7 +21,7 @@ export default function BalancesCard() {
 
   return (
     <Card>
-      <CardHeader>
+      <CardHeader className='space-y-6'>
         <CardTitle>Balances</CardTitle>
         <CardDescription>Your available balances</CardDescription>
       </CardHeader>
