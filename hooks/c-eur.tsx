@@ -26,15 +26,10 @@ export function useGetCEurBalance({
   })
 }
 
-
 /**
  * cEur writes
  */
-export function useApprove({
-  onSuccess,
-}: {
-  onSuccess: (amount: bigint) => void
-}) {
+export function useApprove() {
   const mutation = useWriteContract()
 
   async function approve({
@@ -54,9 +49,13 @@ export function useApprove({
         onSuccess: txHash => {
           toast({
             title: 'Approval Successful',
-            description: <ExplorerLink txHash={txHash} />,
+            description: (
+              <>
+                <ExplorerLink txHash={txHash} />. Waiting for transaction&apos;s
+                success...
+              </>
+            ),
           })
-          onSuccess(amount)
         },
       }
     )

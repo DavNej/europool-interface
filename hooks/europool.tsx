@@ -1,10 +1,15 @@
-import { useReadContract, useWriteContract } from 'wagmi'
+import {
+  useReadContract,
+  useWaitForTransactionReceipt,
+  useWriteContract,
+} from 'wagmi'
 import type { Address } from 'viem'
 import europoolAbi from '@/lib/abis/europool'
 import networkConfig from '@/lib/network.config'
 import { useApprove } from './c-eur'
 import { toast } from '@/components/ui/use-toast'
 import ExplorerLink from '@/components/explorer-link'
+import React from 'react'
 
 const contractConfig = {
   abi: europoolAbi,
@@ -40,14 +45,23 @@ export function useGetRewardsOf({ address }: { address: Address | undefined }) {
  * EuroPool writes
  */
 export function useStake() {
+  const amountRef = React.useRef(BigInt(0))
+
   const mutation = useWriteContract()
-  const { approve } = useApprove({
-    onSuccess: amount => {
+  const { approve, data } = useApprove()
+
+  const result = useWaitForTransactionReceipt({
+    hash: data,
+    query: { enabled: !!data },
+  })
+
+  React.useEffect(() => {
+    if (result.isSuccess && mutation.isIdle && amountRef.current > BigInt(0)) {
       mutation.writeContract(
         {
           ...contractConfig,
           functionName: 'stake',
-          args: [amount],
+          args: [amountRef.current],
         },
         {
           onSuccess: txHash => {
@@ -63,13 +77,14 @@ export function useStake() {
           },
         }
       )
-    },
-  })
+    }
+  }, [mutation, result.isSuccess])
 
   function stake({ amount }: { amount: bigint }) {
+    amountRef.current = amount
     approve({
       address: networkConfig.euroPoolAddress,
-      amount,
+      amount: amountRef.current,
     })
   }
 

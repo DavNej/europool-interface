@@ -31,7 +31,7 @@ export const celoAlfajoresNetworkConfig: NetworkConfig = {
 }
 
 const config =
-  process.env.NODE_ENV !== 'development'
+  process.env.NODE_ENV === 'development'
     ? localhostNetworkConfig
     : celoAlfajoresNetworkConfig
 

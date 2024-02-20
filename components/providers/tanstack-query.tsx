@@ -19,6 +19,9 @@ export default function TanstackQueryProvider({
   function onError(err: unknown) {
     const isTypeError = err instanceof Error && err.message
     console.error('💥', err)
+
+    if (isTypeError && err.message.includes('Chain not configured.')) return
+
     toast({
       title: 'Fetching error 💥',
       description: isTypeError ? err.message : 'Something went wrong',
