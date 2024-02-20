@@ -28,7 +28,14 @@ export function useGetStakedBalanceOf({
     ...contractConfig,
     functionName: 'getStakedBalanceOf',
     args: [address || '0x'],
-    query: { enabled: !!address, initialData: BigInt(0) },
+    query: { enabled: !!address },
+  })
+}
+
+export function useGetTotalStaked() {
+  return useReadContract({
+    ...contractConfig,
+    functionName: 'getTotalStaked',
   })
 }
 
@@ -37,7 +44,7 @@ export function useGetRewardsOf({ address }: { address: Address | undefined }) {
     ...contractConfig,
     functionName: 'getRewardsOf',
     args: [address || '0x'],
-    query: { enabled: !!address, initialData: BigInt(0) },
+    query: { enabled: !!address },
   })
 }
 

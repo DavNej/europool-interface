@@ -22,7 +22,7 @@ export function useGetCEurBalance({
     ...contractConfig,
     functionName: 'balanceOf',
     args: [address || '0x'],
-    query: { enabled: !!address, initialData: BigInt(0) },
+    query: { enabled: !!address },
   })
 }
 
