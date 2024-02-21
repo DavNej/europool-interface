@@ -11,7 +11,7 @@ import { useAccount } from 'wagmi'
 export default function HomePage() {
   const { status } = useAccount()
 
-  if (status === 'disconnected') {
+  if (status !== 'connected') {
     return (
       <p className='m-auto text-xs font-light'>
         Please connect your wallet to continue
