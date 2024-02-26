@@ -7,13 +7,13 @@ import ExplorerLink from '@/components/explorer-link'
 
 const contractConfig = {
   abi: erc20Abi,
-  address: networkConfig.cEuroAddress,
+  address: networkConfig.tokenAddress,
 }
 
 /**
- * cEur reads
+ * token reads
  */
-export function useGetCEurBalance({
+export function useGetTokenBalance({
   address,
 }: {
   address: Address | undefined
@@ -26,8 +26,15 @@ export function useGetCEurBalance({
   })
 }
 
+export function useGetTokenSymbol() {
+  return useReadContract({
+    ...contractConfig,
+    functionName: 'symbol',
+  })
+}
+
 /**
- * cEur writes
+ * token writes
  */
 export function useApprove() {
   const mutation = useWriteContract()

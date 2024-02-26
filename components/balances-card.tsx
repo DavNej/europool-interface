@@ -3,7 +3,7 @@
 import * as React from 'react'
 import { useAccount } from 'wagmi'
 import { formatBigint } from '@/lib/utils'
-import { useGetCEurBalance } from '@/hooks/c-eur'
+import { useGetTokenBalance, useGetTokenSymbol } from '@/hooks/c-eur'
 import {
   useGetRewardsOf,
   useGetStakedBalanceOf,
@@ -19,7 +19,8 @@ import {
 
 export default function BalancesCard() {
   const { address } = useAccount()
-  const { data: cEurBalance } = useGetCEurBalance({ address })
+  const { data: tokenBalance } = useGetTokenBalance({ address })
+  const { data: symbol } = useGetTokenSymbol()
   const { data: stakedBalance } = useGetStakedBalanceOf({ address })
   const { data: totalStaked } = useGetTotalStaked()
   const { data: rewards } = useGetRewardsOf({ address })
@@ -34,22 +35,30 @@ export default function BalancesCard() {
       <CardContent>
         <div className='flex items-center justify-between'>
           <p className='font-medium'>Deposit balance</p>
-          <p>{formatBigint(stakedBalance)} cEUR</p>
+          <p>
+            {formatBigint(stakedBalance)} {symbol}
+          </p>
         </div>
 
         <div className='flex items-center justify-between'>
           <p className='font-medium'>Rewards earned</p>
-          <p>{formatBigint(rewards, 18)} cEUR</p>
+          <p>
+            {formatBigint(rewards, 18)} {symbol}
+          </p>
         </div>
 
         <div className='flex items-center justify-between'>
           <p className='font-medium'>Available balance</p>
-          <p>{formatBigint(cEurBalance)} cEUR</p>
+          <p>
+            {formatBigint(tokenBalance)} {symbol}
+          </p>
         </div>
 
         <div className='flex items-center justify-between'>
           <p className='font-medium'>Total Staked in EuroPool</p>
-          <p>{formatBigint(totalStaked)} cEUR</p>
+          <p>
+            {formatBigint(totalStaked)} {symbol}
+          </p>
         </div>
       </CardContent>
     </Card>

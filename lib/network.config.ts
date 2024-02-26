@@ -3,7 +3,7 @@ import { localhost, celoAlfajores } from 'wagmi/chains'
 
 interface NetworkConfig {
   euroPoolAddress: Address
-  cEuroAddress: Address
+  tokenAddress: Address
   explorerUrl?: string
   chains: readonly [Chain, ...Chain[]]
 }
@@ -19,13 +19,13 @@ localhost.id = 31_337
 
 export const localhostNetworkConfig: NetworkConfig = {
   euroPoolAddress: LOCALHOST_EUROPOOL_ADDRESS,
-  cEuroAddress: LOCALHOST_C_EURO_ADDRESS,
+  tokenAddress: LOCALHOST_C_EURO_ADDRESS,
   chains: [localhost],
 }
 
 export const celoAlfajoresNetworkConfig: NetworkConfig = {
   euroPoolAddress: ALFAJORES_EUROPOOL_ADDRESS,
-  cEuroAddress: ALFAJORES_C_EURO_ADDRESS,
+  tokenAddress: ALFAJORES_C_EURO_ADDRESS,
   explorerUrl: 'https://alfajores.celoscan.io/',
   chains: [celoAlfajores],
 }

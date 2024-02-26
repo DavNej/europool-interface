@@ -3,7 +3,7 @@
 import * as React from 'react'
 import { useAccount } from 'wagmi'
 import { parseEther } from 'viem'
-import { useGetCEurBalance } from '@/hooks/c-eur'
+import { useGetTokenBalance, useGetTokenSymbol } from '@/hooks/c-eur'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import {
@@ -28,13 +28,14 @@ import { formatBigint } from '@/lib/utils'
 
 export default function DepositCard() {
   const { address } = useAccount()
-  const { data: cEurBalance } = useGetCEurBalance({ address })
   const { stake } = useStake()
+  const { data: tokenBalance } = useGetTokenBalance({ address })
+  const { data: symbol } = useGetTokenSymbol()
 
-  const cEurBalanceNumber = Number(formatBigint(cEurBalance))
+  const tokenBalanceNumber = Number(formatBigint(tokenBalance))
 
   const formSchema = z.object({
-    amount: z.coerce.number().step(0.01).min(0).max(cEurBalanceNumber),
+    amount: z.coerce.number().step(0.01).min(0).max(tokenBalanceNumber),
   })
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -51,7 +52,7 @@ export default function DepositCard() {
       <CardHeader className='space-y-6'>
         <CardTitle>Make a deposit</CardTitle>
         <CardDescription>
-          Only cEUR can be deposited to EuroPool
+          Only {symbol} can be deposited to EuroPool
         </CardDescription>
       </CardHeader>
 
@@ -66,11 +67,11 @@ export default function DepositCard() {
                   <FormControl>
                     <Input
                       type='number'
-                      disabled={!cEurBalance}
+                      disabled={!tokenBalance}
                       min={0}
                       step={0.01}
-                      max={cEurBalanceNumber}
-                      placeholder='cEUR amount'
+                      max={tokenBalanceNumber}
+                      placeholder={`${symbol} amount`}
                       {...field}
                     />
                   </FormControl>
@@ -79,7 +80,7 @@ export default function DepositCard() {
                     variant='secondary'
                     size='sm'
                     onClick={() => {
-                      form.setValue('amount', cEurBalanceNumber)
+                      form.setValue('amount', tokenBalanceNumber)
                     }}>
                     Max
                   </Button>

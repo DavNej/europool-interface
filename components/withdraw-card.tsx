@@ -25,10 +25,12 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { formatBigint } from '@/lib/utils'
+import { useGetTokenSymbol } from '@/hooks/c-eur'
 
 export default function WithdrawCard() {
   const { address } = useAccount()
   const { data: stakedBalance } = useGetStakedBalanceOf({ address })
+  const { data: symbol } = useGetTokenSymbol()
   const { withdraw } = useWithdraw()
 
   const stakedBalanceNumber = Number(formatBigint(stakedBalance))
@@ -51,7 +53,7 @@ export default function WithdrawCard() {
       <CardHeader className='space-y-6'>
         <CardTitle>Withdraw funds</CardTitle>
         <CardDescription>
-          Only cEUR can be withdrawn from EuroPool
+          Only {symbol} can be withdrawn from EuroPool
         </CardDescription>
       </CardHeader>
 
@@ -70,7 +72,7 @@ export default function WithdrawCard() {
                       min={0}
                       step={0.01}
                       max={stakedBalanceNumber}
-                      placeholder='cEUR amount'
+                      placeholder={`${symbol} amount`}
                       {...field}
                     />
                   </FormControl>
