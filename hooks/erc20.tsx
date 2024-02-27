@@ -11,7 +11,7 @@ const contractConfig = {
 }
 
 /**
- * token reads
+ * ERC20 reads
  */
 export function useGetTokenBalance({
   address,
@@ -34,7 +34,7 @@ export function useGetTokenSymbol() {
 }
 
 /**
- * token writes
+ * ERC20 writes
  */
 export function useApprove() {
   const mutation = useWriteContract()

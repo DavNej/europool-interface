@@ -25,7 +25,7 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { formatBigint } from '@/lib/utils'
-import { useGetTokenSymbol } from '@/hooks/c-eur'
+import { useGetTokenSymbol } from '@/hooks/erc20'
 
 export default function WithdrawCard() {
   const { address } = useAccount()

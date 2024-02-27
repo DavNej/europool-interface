@@ -1,3 +1,4 @@
+import React from 'react'
 import {
   useReadContract,
   useWaitForTransactionReceipt,
@@ -6,10 +7,9 @@ import {
 import type { Address } from 'viem'
 import europoolAbi from '@/lib/abis/europool'
 import networkConfig from '@/lib/network.config'
-import { useApprove } from './c-eur'
 import { toast } from '@/components/ui/use-toast'
 import ExplorerLink from '@/components/explorer-link'
-import React from 'react'
+import { useApprove } from './erc20'
 
 const contractConfig = {
   abi: europoolAbi,

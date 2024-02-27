@@ -10,7 +10,7 @@ import {
   CardTitle,
 } from '@/components/ui/card'
 import { useClaimReward } from '@/hooks/europool'
-import { useGetTokenSymbol } from '@/hooks/c-eur'
+import { useGetTokenSymbol } from '@/hooks/erc20'
 
 export default function ClaimRewardCard() {
   const { claimReward } = useClaimReward()

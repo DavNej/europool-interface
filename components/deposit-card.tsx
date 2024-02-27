@@ -3,7 +3,7 @@
 import * as React from 'react'
 import { useAccount } from 'wagmi'
 import { parseEther } from 'viem'
-import { useGetTokenBalance, useGetTokenSymbol } from '@/hooks/c-eur'
+import { useGetTokenBalance, useGetTokenSymbol } from '@/hooks/erc20'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import {

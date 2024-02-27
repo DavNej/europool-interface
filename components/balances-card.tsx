@@ -3,7 +3,7 @@
 import * as React from 'react'
 import { useAccount } from 'wagmi'
 import { formatBigint } from '@/lib/utils'
-import { useGetTokenBalance, useGetTokenSymbol } from '@/hooks/c-eur'
+import { useGetTokenBalance, useGetTokenSymbol } from '@/hooks/erc20'
 import {
   useGetRewardsOf,
   useGetStakedBalanceOf,
