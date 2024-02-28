@@ -1,14 +1,9 @@
 import { useReadContract, useWriteContract } from 'wagmi'
 import erc20Abi from '@/lib/abis/erc20'
-import networkConfig from '@/lib/network.config'
+import { useNetworkConfig } from '@/lib/network-config'
 import type { Address } from 'viem'
 import { toast } from '@/components/ui/use-toast'
 import ExplorerLink from '@/components/explorer-link'
-
-const contractConfig = {
-  abi: erc20Abi,
-  address: networkConfig.tokenAddress,
-}
 
 /**
  * ERC20 reads
@@ -18,8 +13,11 @@ export function useGetTokenBalance({
 }: {
   address: Address | undefined
 }) {
+  const networkConfig = useNetworkConfig()
+
   return useReadContract({
-    ...contractConfig,
+    abi: erc20Abi,
+    address: networkConfig.tokenAddress,
     functionName: 'balanceOf',
     args: [address || '0x'],
     query: { enabled: !!address },
@@ -27,8 +25,11 @@ export function useGetTokenBalance({
 }
 
 export function useGetTokenSymbol() {
+  const networkConfig = useNetworkConfig()
+
   return useReadContract({
-    ...contractConfig,
+    abi: erc20Abi,
+    address: networkConfig.tokenAddress,
     functionName: 'symbol',
   })
 }
@@ -37,6 +38,7 @@ export function useGetTokenSymbol() {
  * ERC20 writes
  */
 export function useApprove() {
+  const networkConfig = useNetworkConfig()
   const mutation = useWriteContract()
 
   async function approve({
@@ -48,7 +50,8 @@ export function useApprove() {
   }) {
     mutation.writeContract(
       {
-        ...contractConfig,
+        abi: erc20Abi,
+        address: networkConfig.tokenAddress,
         functionName: 'approve',
         args: [address, amount],
       },

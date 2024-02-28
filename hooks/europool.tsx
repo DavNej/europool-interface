@@ -6,15 +6,10 @@ import {
 } from 'wagmi'
 import type { Address } from 'viem'
 import europoolAbi from '@/lib/abis/europool'
-import networkConfig from '@/lib/network.config'
+import { useNetworkConfig } from '@/lib/network-config'
 import { toast } from '@/components/ui/use-toast'
 import ExplorerLink from '@/components/explorer-link'
 import { useApprove } from './erc20'
-
-const contractConfig = {
-  abi: europoolAbi,
-  address: networkConfig.euroPoolAddress,
-}
 
 /**
  * EuroPool reads
@@ -24,8 +19,11 @@ export function useGetStakedBalanceOf({
 }: {
   address: Address | undefined
 }) {
+  const networkConfig = useNetworkConfig()
+
   return useReadContract({
-    ...contractConfig,
+    abi: europoolAbi,
+    address: networkConfig.euroPoolAddress,
     functionName: 'getStakedBalanceOf',
     args: [address || '0x'],
     query: { enabled: !!address },
@@ -33,15 +31,21 @@ export function useGetStakedBalanceOf({
 }
 
 export function useGetTotalStaked() {
+  const networkConfig = useNetworkConfig()
+
   return useReadContract({
-    ...contractConfig,
+    abi: europoolAbi,
+    address: networkConfig.euroPoolAddress,
     functionName: 'getTotalStaked',
   })
 }
 
 export function useGetRewardsOf({ address }: { address: Address | undefined }) {
+  const networkConfig = useNetworkConfig()
+
   return useReadContract({
-    ...contractConfig,
+    abi: europoolAbi,
+    address: networkConfig.euroPoolAddress,
     functionName: 'getRewardsOf',
     args: [address || '0x'],
     query: { enabled: !!address },
@@ -54,6 +58,7 @@ export function useGetRewardsOf({ address }: { address: Address | undefined }) {
 export function useStake() {
   const amountRef = React.useRef(BigInt(0))
 
+  const networkConfig = useNetworkConfig()
   const mutation = useWriteContract()
   const { approve, data } = useApprove()
 
@@ -66,7 +71,8 @@ export function useStake() {
     if (result.isSuccess && mutation.isIdle && amountRef.current > BigInt(0)) {
       mutation.writeContract(
         {
-          ...contractConfig,
+          abi: europoolAbi,
+          address: networkConfig.euroPoolAddress,
           functionName: 'stake',
           args: [amountRef.current],
         },
@@ -85,7 +91,7 @@ export function useStake() {
         }
       )
     }
-  }, [mutation, result.isSuccess])
+  }, [mutation, networkConfig.euroPoolAddress, result.isSuccess])
 
   function stake({ amount }: { amount: bigint }) {
     amountRef.current = amount
@@ -99,12 +105,14 @@ export function useStake() {
 }
 
 export function useWithdraw() {
+  const networkConfig = useNetworkConfig()
   const mutation = useWriteContract()
 
   function withdraw({ amount }: { amount: bigint }) {
     mutation.writeContract(
       {
-        ...contractConfig,
+        abi: europoolAbi,
+        address: networkConfig.euroPoolAddress,
         functionName: 'withdraw',
         args: [amount],
       },
@@ -128,12 +136,14 @@ export function useWithdraw() {
 }
 
 export function useClaimReward() {
+  const networkConfig = useNetworkConfig()
   const mutation = useWriteContract()
 
   function claimReward() {
     mutation.writeContract(
       {
-        ...contractConfig,
+        abi: europoolAbi,
+        address: networkConfig.euroPoolAddress,
         functionName: 'claimReward',
       },
       {

@@ -1,12 +1,18 @@
 import Link from 'next/link'
-import networkConfig from '@/lib/network.config'
+import { useNetworkConfig } from '@/lib/network-config'
 
 export default function ExplorerLink({ txHash }: { txHash: string }) {
+  const { explorerUrl } = useNetworkConfig()
+
+  if (!explorerUrl) {
+    return null
+  }
+
   return (
     <Link
       className='underline'
       target='_blank'
-      href={`${networkConfig.explorerUrl}/tx/${txHash}`}>
+      href={`${explorerUrl}/tx/${txHash}`}>
       View on Explorer
     </Link>
   )
