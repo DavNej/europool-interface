@@ -16,17 +16,17 @@ interface NetworkConfig {
 
 export const networkConfigs: Record<number, NetworkConfig> = {
   [celoAlfajores.id]: {
-    euroPoolAddress: '0xb45Fa036d3E90c9900397D1F0EcaBE65A6967C93',
+    euroPoolAddress: '0x0DDEfCCC221781946EBb084dDe4fBC2D47EdC585',
     tokenAddress: '0x10c892A6EC43a53E45D0B916B4b7D383B1b78C0F', // cEUR
     explorerUrl: 'https://alfajores.celoscan.io/',
   },
   [sepolia.id]: {
-    euroPoolAddress: '0x',
+    euroPoolAddress: '0x6F1A5F49E15c90fcDb54157029063548Be2bE220',
     tokenAddress: '0x523C8591Fbe215B5aF0bEad65e65dF783A37BCBC', // USDT
     explorerUrl: 'https://sepolia.etherscan.io/',
   },
   [polygonMumbai.id]: {
-    euroPoolAddress: '0x',
+    euroPoolAddress: '0x6F1A5F49E15c90fcDb54157029063548Be2bE220',
     tokenAddress: '0x6D8873f56a56f0Af376091beddDD149f3592e854', // DAI
     explorerUrl: 'https://mumbai.polygonscan.com/',
   },
